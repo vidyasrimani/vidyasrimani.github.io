@@ -1,173 +1,146 @@
-# If your site is in 'https', then make sure your base url isn't written using 'http' otherwise your sitemap would
-# contain http (as opposeed to https) URLs. This would affect Google indexing of your URLs.
+languageCode: en-us
 baseURL: "https://vidyasrimani.github.io/"
 title: Vidya Mani
 paginate: 5
-theme: [hugo-PaperMod]
+theme: PaperMod
 
-enableInlineShortcodes: true
 enableRobotsTXT: true
 buildDrafts: false
 buildFuture: false
 buildExpired: false
-enableEmoji: true
-pygmentsUseClasses: true
-mainsections: ["posts", "papermod"]
+
+#googleAnalytics: UA-123-45
 
 minify:
   disableXML: true
-  # minifyOutput: true
-
-languages:
-  en:
-    languageName: "English"
-    weight: 1
-    taxonomies:
-      category: categories
-      tag: tags
-      series: series
-    menu:
-      main:
-        - name: Article
-          url: articles
-          weight: 5
-        - name: Search
-          url: search/
-          weight: 10
-        - name: Tags
-          url: tags/
-          weight: 10
-
-outputs:
-  home:
-    - HTML
-    - RSS
-    - JSON
+  minifyOutput: true
 
 params:
-  env: production
-  description: "Vidya Mani"
+  env: production # to enable google analytics, opengraph, twitter-cards and schema.
+  title: Vidya Mani
+  description: "I am a passionate and results-driven Senior Data Scientist with extensive experience in machine learning, computer vision, and natural language processing. I specialize in developing and deploying advanced AI-driven solutions to solve complex problems and drive business innovation. I am constantly exploring new technologies and methodologies to enhance my skills and stay at the forefront of the field."
+  keywords: [Machine Learning, AI, Artificial Intelligence, Data Science, Portfolio, Blog]
   author: Vidya Mani
+  # author: ["Me", "You"] # multiple authors
+  #images: ["<link or path of image for opengraph, twitter-cards>"]
+  DateFormat: "June 14, 2024"
+  defaultTheme: auto # dark, light
+  disableThemeToggle: false
 
-  defaultTheme: auto
-  # disableThemeToggle: true
-  ShowShareButtons: true
   ShowReadingTime: true
-  # disableSpecial1stPost: true
-  displayFullLangName: true
+  ShowShareButtons: true
   ShowPostNavLinks: true
   ShowBreadCrumbs: true
-  ShowCodeCopyButtons: true
-  ShowRssButtonInSectionTermList: true
-  ShowAllPagesInArticle: true
-  ShowPageNums: true
-  ShowToc: true
-  # comments: false
+  ShowCodeCopyButtons: false
+  disableSpecial1stPost: false
+  disableScrollToTop: false
+  comments: false
+  hidemeta: false
+  hideSummary: false
+  showtoc: false
+  tocopen: false
 
+  label:
+    text: "Vidya Mani"
+    icon: "images/coding.png"
+    iconHeight: 35
+
+  # profile-mode
   profileMode:
-    enabled: false
-    title: Vidya Mani
-    imageUrl: "#"
-    imageTitle: my image
-    # imageWidth: 120
-    # imageHeight: 120
+    enabled: true # needs to be explicitly set
+    title: "Welcome! \U0001F44B"
+    subtitle: "I am a passionate and results-driven Senior Data Scientist with extensive experience in machine learning, computer vision, and natural language processing. I specialize in developing and deploying advanced AI-driven solutions to solve complex problems and drive business innovation. I am constantly exploring new technologies and methodologies to enhance my skills and stay at the forefront of the field."
+    imageUrl: "images/dp.png"
+    imageWidth: 120
+    imageHeight: 120
+    imageTitle: "Vidya Mani"
     buttons:
-      - name: Articles
-        url: articles
-      - name: Tags
-        url: tags
+      - name: Blogs
+        url: blogs
+      - name: Projects
+        url: projects
 
+  # home-info mode
   homeInfoParams:
-    Title: "Vidya Mani"
-    Content: >
-      Vidya Mani
+    Title: "Hi!"
+    Content: "I am a passionate and results-driven Senior Data Scientist with extensive experience in machine learning, computer vision, and natural language processing. I specialize in developing and deploying advanced AI-driven solutions to solve complex problems and drive business innovation. I am constantly exploring new technologies and methodologies to enhance my skills and stay at the forefront of the field."
 
-      **Data Scientist** | **Machine Learning Engineer** | **Software Engineer**
-
-      I am a passionate and results-driven Senior Data Scientist with extensive experience in machine learning, computer vision, and natural language processing. I specialize in developing and deploying advanced AI-driven solutions to solve complex problems and drive business innovation. I am constantly exploring new technologies and methodologies to enhance my skills and stay at the forefront of the field.
   socialIcons:
-
-    - name: LinkedIn
-      title: Let's connect on Linkedin
+    
+    - name: linkedin
       url: "https://www.linkedin.com/in/vidya-mani/"
-
-    - name: Medium
-      title: Follow on Medium
+    
+    - name: medium
       url: "https://medium.com/@vidyamani"
-
+    
     - name: github
-      title: Follow on Github
       url: "https://github.com/vidyasrimani"
-      
+    
+
+  analytics:
+    google:
+      SiteVerificationTag: "XYZabc"
+    bing:
+      SiteVerificationTag: "XYZabc"
+    yandex:
+      SiteVerificationTag: "XYZabc"
+
+  cover:
+    hidden: true # hide everywhere but not in structured data
+    hiddenInList: true # hide on list pages and home
+    hiddenInSingle: false # hide on single page
+
+
   editPost:
-    URL: "https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content"
-    Text: "Suggest Changes" # edit text
+#    URL: "https://github.com/chanin-www/content"
+#    Text: "Suggest Changes" # edit text
+    URL: ""
+    Text: "" # edit text
     appendFilePath: true # to append file path to Edit link
 
-  # label:
-  # iconSVG: '<svg xmlns="http://www.w3.org/2000/svg" height="25" viewBox="0 -960 960 960" fill="currentColor"><path d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"/></svg>'
-  # text: "Home"
-  # icon: icon.png
-  # iconHeight: 35
+  # for search
+  # https://fusejs.io/api/options.html
+  fuseOpts:
+    isCaseSensitive: false
+    shouldSort: true
+    location: 0
+    distance: 1000
+    threshold: 0.4
+    minMatchCharLength: 0
+    keys: ["title", "permalink", "summary", "content"]
+menu:
+  main:
+    - identifier: about
+      name: About
+      url: /about/
+      weight: 4
+    - identifier: blog
+      name: Blogs
+      url: /blogs/
+      weight: 1
+    - identifier: projects
+      name: Projects
+      url: /projects/
+      weight: 2
+    - identifier: infographics
+      name: Infographics
+      url: /infographics/
+      weight: 3
+    #- identifier: tags
+    #  name: tags
+    #  url: /tags/
+    #  weight: 4
 
-  # analytics:
-  #     google:
-  #         SiteVerificationTag: "XYZabc"
-
-  assets:
-    disableHLJS: true
-  #     favicon: "<link / abs url>"
-  #     favicon16x16: "<link / abs url>"
-  #     favicon32x32: "<link / abs url>"
-  #     apple_touch_icon: "<link / abs url>"
-  #     safari_pinned_tab: "<link / abs url>"
-
-  # cover:
-  #     hidden: true # hide everywhere but not in structured data
-  #     hiddenInList: true # hide on list pages and home
-  #     hiddenInSingle: true # hide on single page
-
-  # fuseOpts:
-  #     isCaseSensitive: false
-  #     shouldSort: true
-  #     location: 0
-  #     distance: 1000
-  #     threshold: 0.4
-  #     minMatchCharLength: 0
-  #     keys: ["title", "permalink", "summary", "content"]
-
-markup:
-  goldmark:
-    renderer:
-      unsafe: true
-  highlight:
-    noClasses: false
-    # anchorLineNos: true
-    # codeFences: true
-    # guessSyntax: true
-    # lineNos: true
-    # style: monokai
-
-# privacy:
-#   vimeo:
-#     disabled: false
-#     simple: true
-
-#   twitter:
-#     disabled: false
-#     enableDNT: true
-#     simple: true
-
-#   instagram:
-#     disabled: false
-#     simple: true
-
-#   youtube:
-#     disabled: false
-#     privacyEnhanced: true
-
-services:
-  instagram:
-    disableInlineCSS: true
-  twitter:
-    disableInlineCSS: true
+    #- identifier: example
+    #  name: example.org
+    #  url: https://example.org
+    #  weight: 30
+# Read: https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#using-hugos-syntax-highlighter-chroma
+# pygmentsUseClasses: true
+# markup:
+#     highlight:
+#         # anchorLineNos: true
+#         codeFences: true
+#         guessSyntax: true
+#         lineNos: true
+#         style: monokai
