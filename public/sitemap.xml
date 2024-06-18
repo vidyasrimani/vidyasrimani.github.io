@@ -2,34 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://vidyasrimani.github.io/about/</loc>
-    <lastmod>2022-04-09T23:15:00+07:00</lastmod>
+    <loc>http://localhost:1313/about/</loc>
   </url><url>
-    <loc>https://vidyasrimani.github.io/infographics/</loc>
-    <lastmod>2022-04-09T23:15:00+07:00</lastmod>
+    <loc>http://localhost:1313/projects/acetylcholinesterase/</loc>
   </url><url>
-    <loc>https://vidyasrimani.github.io/</loc>
-    <lastmod>2022-04-09T23:15:00+07:00</lastmod>
+    <loc>http://localhost:1313/categories/</loc>
   </url><url>
-    <loc>https://vidyasrimani.github.io/projects/acetylcholinesterase/</loc>
-    <lastmod>2022-04-04T23:15:00+07:00</lastmod>
+    <loc>http://localhost:1313/tags/first/</loc>
   </url><url>
-    <loc>https://vidyasrimani.github.io/projects/</loc>
-    <lastmod>2022-04-04T23:15:00+07:00</lastmod>
+    <loc>http://localhost:1313/projects/acetylcholinesterase/</loc>
   </url><url>
-    <loc>https://vidyasrimani.github.io/tags/first/</loc>
-    <lastmod>2020-09-15T11:30:03+00:00</lastmod>
+    <loc>http://localhost:1313/projects/acetylcholinesterase/</loc>
   </url><url>
-    <loc>https://vidyasrimani.github.io/page/</loc>
-    <lastmod>2020-09-15T11:30:03+00:00</lastmod>
+    <loc>http://localhost:1313/page/</loc>
   </url><url>
-    <loc>https://vidyasrimani.github.io/tags/</loc>
-    <lastmod>2020-09-15T11:30:03+00:00</lastmod>
+    <loc>http://localhost:1313/projects/acetylcholinesterase/</loc>
   </url><url>
-    <loc>https://vidyasrimani.github.io/categories/</loc>
+    <loc>http://localhost:1313/projects/acetylcholinesterase/</loc>
   </url><url>
-    <loc>https://vidyasrimani.github.io/writings/numba-for-data-science/</loc>
+    <loc>http://localhost:1313/projects/</loc>
   </url><url>
-    <loc>https://vidyasrimani.github.io/writings/</loc>
+    <loc>http://localhost:1313/projects/acetylcholinesterase/</loc>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
+  </url><url>
+    <loc>http://localhost:1313/writings/numba-for-data-science/</loc>
+  </url><url>
+    <loc>http://localhost:1313/</loc>
+  </url><url>
+    <loc>http://localhost:1313/writings/</loc>
   </url>
 </urlset>

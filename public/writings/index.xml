@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Writings on Vidya Mani</title>
-    <link>https://vidyasrimani.github.io/writings/</link>
+    <link>http://localhost:1313/writings/</link>
     <description>Recent content in Writings on Vidya Mani</description>
     <image>
-      <url>https://vidyasrimani.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
-      <link>https://vidyasrimani.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+      <url>http://localhost:1313/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>http://localhost:1313/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="https://vidyasrimani.github.io/writings/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language><atom:link href="http://localhost:1313/writings/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Turbocharging Python for Data Science with Numba</title>
-      <link>https://vidyasrimani.github.io/writings/numba-for-data-science/</link>
+      <link>http://localhost:1313/writings/numba-for-data-science/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://vidyasrimani.github.io/writings/numba-for-data-science/</guid>
+      <guid>http://localhost:1313/writings/numba-for-data-science/</guid>
       <description>Preview Turbocharging Python for Data Science with Numba Python is powerful for data science, but it can struggle with heavy computations. Numba, an open-source JIT compiler, accelerates Python code by converting it into efficient machine code with minimal effort. By simply adding a decorator, Numba can significantly boost performance, making it ideal for numerical computations, custom algorithms, and real-time data processing, all while maintaining Python&amp;rsquo;s ease of use.
 In this article, you’ll learn how to use Numba with data science.</description>
     </item>
