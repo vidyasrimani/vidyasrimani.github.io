@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Projects on Vidya Mani</title>
+    <link>https://vidyasrimani.github.io/projects/</link>
+    <description>Recent content in Projects on Vidya Mani</description>
+    <image>
+      <url>https://vidyasrimani.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://vidyasrimani.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="https://vidyasrimani.github.io/projects/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>BERT Based Semantic Search</title>
+      <link>https://vidyasrimani.github.io/projects/acetylcholinesterase/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://vidyasrimani.github.io/projects/acetylcholinesterase/</guid>
+      <description>Abstract Implemented a BERT-based semantic search engine to enhance the accuracy and relevance of search results by understanding contextual nuances in queries and documents.</description>
+    </item>
+    
+    <item>
+      <title>Image Captioning</title>
+      <link>https://vidyasrimani.github.io/projects/acetylcholinesterase/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://vidyasrimani.github.io/projects/acetylcholinesterase/</guid>
+      <description>Abstract Built an automatic image captioning application by combining CNN and RNN architectures, enhancing computer vision tasks.
+Read More</description>
+    </item>
+    
+    <item>
+      <title>Multimodal Image Search Using Transformer-Based Architectures</title>
+      <link>https://vidyasrimani.github.io/projects/acetylcholinesterase/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://vidyasrimani.github.io/projects/acetylcholinesterase/</guid>
+      <description>Abstract An image search system using a multimodal large language model trained with CLIP to map text and images into a shared embedding space for accurate retrieval based on textual queries.
+Watch Demo</description>
+    </item>
+    
+    <item>
+      <title>Network Node Discovery</title>
+      <link>https://vidyasrimani.github.io/projects/acetylcholinesterase/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://vidyasrimani.github.io/projects/acetylcholinesterase/</guid>
+      <description>Abstract Network connectivity discovery is an extensively studied area, and there are many interesting mechanisms such as ping, traceroute, DNS, address resolution protocol (ARP), and SNMP available to discover network elements and the connectivity among them. Traceroute is a computer network diagnostic tool for displaying the route (path) and measuring transit delays of packets across an Internet Protocol (IP) network.
+Read More</description>
+    </item>
+    
+    <item>
+      <title>Object Tracking using SLAM</title>
+      <link>https://vidyasrimani.github.io/projects/acetylcholinesterase/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://vidyasrimani.github.io/projects/acetylcholinesterase/</guid>
+      <description>Abstract Implemented SLAM to localize a robot and build an environmental map using sensor data.
+Read More</description>
+    </item>
+    
+    <item>
+      <title>Semantic Search Using SOLR</title>
+      <link>https://vidyasrimani.github.io/projects/acetylcholinesterase/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://vidyasrimani.github.io/projects/acetylcholinesterase/</guid>
+      <description>Abstract Implemented a semantic search engine on a News Corpus, which will produce enhanced search results based on semantics. This can be achieved using various natural language Processing features and techniques. This project has to use a keyword-based strategy.
+Read More</description>
+    </item>
+    
+  </channel>
+</rss>
