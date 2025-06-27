@@ -4,6 +4,12 @@
   <url>
     <loc>http://localhost:1313/about/</loc>
   </url><url>
+    <loc>http://localhost:1313/writings/ml-design-with-gcp-intro/</loc>
+  </url><url>
+    <loc>http://localhost:1313/writings/ml-design-with-gcp-part1/</loc>
+  </url><url>
+    <loc>http://localhost:1313/writings/ml-design-with-gcp-part2/</loc>
+  </url><url>
     <loc>http://localhost:1313/projects/acetylcholinesterase/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
@@ -21,6 +27,8 @@
     <loc>http://localhost:1313/projects/acetylcholinesterase/</loc>
   </url><url>
     <loc>http://localhost:1313/projects/</loc>
+  </url><url>
+    <loc>http://localhost:1313/search/</loc>
   </url><url>
     <loc>http://localhost:1313/projects/acetylcholinesterase/</loc>
   </url><url>

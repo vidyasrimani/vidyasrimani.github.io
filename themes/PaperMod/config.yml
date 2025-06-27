@@ -72,12 +72,12 @@ params:
     Content: Welcome to my writing
 
   socialIcons:
-    - name: twitter
-      url: "https://twitter.com/"
-    - name: stackoverflow
-      url: "https://stackoverflow.com"
+    - name: linkedin
+      url: "https://www.linkedin.com/in/vidya-mani/"
+    - name: medium
+      url: "https://medium.com/@vidyamani"
     - name: github
-      url: "https://github.com/"
+      url: "https://github.com/vidyasrimani"
 
   analytics:
     google:

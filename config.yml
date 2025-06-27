@@ -52,8 +52,8 @@ params:
   # profile-mode
   profileMode:
     enabled: true # needs to be explicitly set
-    title: "Hi! I’m Vidya"
-    subtitle: "Data Scientist | Machine Learning Engineer | Software Engineer"
+    title: "Hi! I'm Vidya"
+    subtitle: "ML and AI Enthusiast | Software Engineer"
     buttons:
       - name: Writings
         url: writings
@@ -64,7 +64,7 @@ params:
   homeInfoParams:
     Title: "Welcome! \U0001F44B"
     Content: | 
-      Data Scientist | Machine Learning Engineer | Software Engineer**.
+      ML and AI Enthusiast | Software Engineer**.
 
   socialIcons:
     - name: linkedin

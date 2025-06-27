@@ -1,0 +1,33 @@
+name: Update Medium Posts
+on:
+  schedule:
+    - cron: '0 6 * * *' # Runs daily at 6 AM
+  workflow_dispatch: # Manual trigger
+  push:
+    branches: [ main ]
+
+jobs:
+  update-medium-posts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Fetch Medium posts
+        run: npm run fetch-medium
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add content/writings/medium/
+          git diff --quiet && git diff --staged --quiet || git commit -m "Update Medium posts [skip ci]"
+          git push 

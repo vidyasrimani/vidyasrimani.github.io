@@ -11,6 +11,36 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language><atom:link href="http://localhost:1313/writings/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Architecting Large-Scale Search Solutions on GCP: A Technical Deep Dive</title>
+      <link>http://localhost:1313/writings/ml-design-with-gcp-intro/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/writings/ml-design-with-gcp-intro/</guid>
+      <description>Preview Architecting Large-Scale Search Solutions on GCP: A Technical Deep Dive This multi-part blog series outlines the architecture of a large-scale search and ranking solution using Google Cloud Platform (GCP). We’ll cover each system component, from data ingestion to serving, focusing on scalability, performance, and machine learning integration. Each part will detail specific GCP services, design rationales, and implementation considerations.
+Read writing</description>
+    </item>
+    
+    <item>
+      <title>Architecting Large-Scale Search Solutions on GCP: Part 1 - Overview</title>
+      <link>http://localhost:1313/writings/ml-design-with-gcp-part1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/writings/ml-design-with-gcp-part1/</guid>
+      <description>Preview Architecting Large-Scale Search Solutions on GCP: Overview In today’s data-driven world, building large-scale machine learning (ML) solutions that can handle massive amounts of information, provide real-time insights, and scale effortlessly is more crucial than ever. Google Cloud Platform (GCP) offers a robust suite of tools and services that enable it to architect such systems with relative ease.
+Read writing</description>
+    </item>
+    
+    <item>
+      <title>Architecting Large-Scale Search Solutions on GCP: Part 2 — Data Ingestion and Storage</title>
+      <link>http://localhost:1313/writings/ml-design-with-gcp-part2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/writings/ml-design-with-gcp-part2/</guid>
+      <description>Preview Architecting Large-Scale Search Solutions on GCP: Part 2 — Data Ingestion and Storage This section will examine a large-scale search architecture’s data ingestion and storage components. We’ll focus on efficiently handling high-volume data ingestion and reliably storing it using Google Cloud Platform services.
+Data Ingestion We need to ingest large volumes of data from various sources for our search solution. To handle different data update patterns, we’ll use a combination of batch and streaming ingestion.</description>
+    </item>
+    
+    <item>
       <title>Turbocharging Python for Data Science with Numba</title>
       <link>http://localhost:1313/writings/numba-for-data-science/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>

@@ -1,0 +1,17 @@
+{
+  "name": "vidyasrimani.github.io",
+  "version": "1.0.0",
+  "description": "Personal portfolio website",
+  "scripts": {
+    "fetch-medium": "node scripts/fetch-medium-posts.js",
+    "dev": "hugo server --bind 0.0.0.0 --port 1313",
+    "build": "hugo --minify"
+  },
+  "dependencies": {
+    "rss-parser": "^3.13.0"
+  },
+  "devDependencies": {},
+  "keywords": ["hugo", "portfolio", "blog"],
+  "author": "Vidya Mani",
+  "license": "MIT"
+} 
