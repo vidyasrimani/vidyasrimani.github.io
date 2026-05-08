@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vidya Mani — AI Systems & Architecture</title>
+  <meta name="description" content="Vidya Mani — AI systems practitioner specialising in multi-agent architectures, RAG, and production GenAI. Writing and building at the frontier." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:        #111110;
+      --ink-2:      #3d3d3a;
+      --ink-3:      #7a7972;
+      --paper:      #f9f8f4;
+      --paper-2:    #f2f0ea;
+      --paper-3:    #e8e5dc;
+      --green:      #1c4535;
+      --green-mid:  #2a6349;
+      --green-pale: #e4ede9;
+      --amber:      #92600a;
+      --amber-pale: #fdf3e3;
+      --rule:       #dedad0;
+      --font-serif: 'Libre Baskerville', Georgia, serif;
+      --font-sans:  'DM Sans', system-ui, sans-serif;
+      --font-mono:  'DM Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--paper);
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 6vw;
+      background: rgba(249,248,244,0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--rule);
+    }
+    .nav-mark {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--ink);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.78rem; font-weight: 500;
+      letter-spacing: 0.07em; text-transform: uppercase;
+      color: var(--ink-3); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--green); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      padding-top: 56px;
+      display: grid;
+      grid-template-rows: 1fr auto;
+    }
+    .hero-main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--rule);
+    }
+    .hero-left {
+      padding: 8vw 5vw 8vw 6vw;
+      display: flex; flex-direction: column; justify-content: center;
+      border-right: 1px solid var(--rule);
+    }
+    .hero-kicker {
+      font-family: var(--font-mono);
+      font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--green); margin-bottom: 2rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .hero-kicker::before {
+      content: ''; display: block;
+      width: 28px; height: 1px; background: var(--green);
+    }
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(3rem, 5.5vw, 5rem);
+      font-weight: 400; line-height: 1.08;
+      letter-spacing: -0.03em; color: var(--ink);
+      margin-bottom: 1.75rem;
+    }
+    h1 em { font-style: italic; color: var(--green); }
+    .hero-sub {
+      font-size: 1.05rem; font-weight: 300;
+      color: var(--ink-2); line-height: 1.8;
+      max-width: 440px; margin-bottom: 2.5rem;
+    }
+    .hero-sub strong { font-weight: 500; color: var(--ink); }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.7rem 1.6rem; border-radius: 2px;
+      font-size: 0.82rem; font-weight: 500; letter-spacing: 0.04em;
+      text-decoration: none; transition: all 0.18s;
+    }
+    .btn-fill { background: var(--green); color: #fff; }
+    .btn-fill:hover { background: var(--green-mid); transform: translateY(-1px); }
+    .btn-line { border: 1px solid var(--rule); color: var(--ink-2); }
+    .btn-line:hover { border-color: var(--green); color: var(--green); transform: translateY(-1px); }
+
+    .hero-right {
+      padding: 8vw 6vw 8vw 5vw;
+      background: var(--paper-2);
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .hero-areas {
+      display: flex; flex-direction: column; gap: 0;
+    }
+    .area-row {
+      display: flex; align-items: center; gap: 1.25rem;
+      padding: 1.1rem 0;
+      border-bottom: 1px solid var(--rule);
+      cursor: default;
+      transition: background 0.15s;
+    }
+    .area-row:first-child { border-top: 1px solid var(--rule); }
+    .area-row:hover { background: var(--green-pale); margin: 0 -1rem; padding-left: 1rem; padding-right: 1rem; border-radius: 2px; }
+    .area-num {
+      font-family: var(--font-mono); font-size: 0.62rem;
+      color: var(--ink-3); letter-spacing: 0.06em; min-width: 20px;
+    }
+    .area-name {
+      font-size: 0.92rem; font-weight: 500; color: var(--ink); flex: 1;
+    }
+    .area-tags {
+      display: flex; gap: 0.4rem; flex-wrap: wrap; justify-content: flex-end;
+    }
+    .chip {
+      font-family: var(--font-mono); font-size: 0.62rem;
+      padding: 0.15rem 0.5rem; border-radius: 2px;
+      background: var(--paper-3); color: var(--ink-3);
+    }
+    .chip.g { background: var(--green-pale); color: var(--green); }
+
+    .hero-footer {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--rule);
+    }
+    .hf-stat {
+      padding: 1.5rem 2rem;
+      border-right: 1px solid var(--rule);
+    }
+    .hf-stat:last-child { border-right: none; }
+    .hf-n {
+      font-family: var(--font-serif);
+      font-size: 2rem; font-weight: 700;
+      color: var(--green); letter-spacing: -0.04em; line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .hf-l {
+      font-size: 0.75rem; color: var(--ink-3); line-height: 1.4; font-weight: 300;
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 6rem 6vw; }
+    section.alt { background: var(--paper-2); }
+
+    .sec-head {
+      display: flex; align-items: baseline; gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+    .sec-tag {
+      font-family: var(--font-mono); font-size: 0.65rem;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--green); white-space: nowrap;
+    }
+    h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 400; letter-spacing: -0.03em;
+      color: var(--ink); line-height: 1.1;
+    }
+    .sec-rule { flex: 1; height: 1px; background: var(--rule); }
+
+    /* ── ABOUT ── */
+    .about-wrap {
+      display: grid; grid-template-columns: 1.3fr 1fr; gap: 7rem;
+      align-items: start;
+    }
+    .about-body p {
+      font-size: 1.05rem; font-weight: 300;
+      color: var(--ink-2); line-height: 1.9;
+      margin-bottom: 1.5rem;
+    }
+    .about-body p strong { color: var(--ink); font-weight: 500; }
+    .pull-quote {
+      margin: 2.5rem 0;
+      padding-left: 1.5rem;
+      border-left: 3px solid var(--green);
+      font-family: var(--font-serif);
+      font-size: 1.15rem; font-style: italic;
+      color: var(--green); line-height: 1.65;
+    }
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+    .tl-item {
+      display: grid; grid-template-columns: 10px 1fr;
+      gap: 1.25rem; padding: 1.2rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .tl-item:last-child { border-bottom: none; }
+    .tl-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      margin-top: 0.45rem; flex-shrink: 0;
+    }
+    .tl-dot.g { background: var(--green); }
+    .tl-dot.a { background: var(--amber); }
+    .tl-dot.s { background: var(--ink-3); }
+    .tl-era {
+      font-family: var(--font-mono); font-size: 0.65rem;
+      color: var(--ink-3); letter-spacing: 0.08em; text-transform: uppercase;
+      margin-bottom: 0.2rem;
+    }
+    .tl-role { font-size: 0.9rem; font-weight: 500; color: var(--ink); margin-bottom: 0.15rem; }
+    .tl-desc { font-size: 0.8rem; color: var(--ink-3); line-height: 1.5; }
+
+    /* ── EXPERTISE ── */
+    .expertise-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    }
+    .exp-card {
+      padding: 2rem; background: white;
+      border: 1px solid var(--rule); border-radius: 2px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .exp-card:hover { border-color: var(--green); transform: translateY(-3px); }
+    .exp-icon { font-size: 1.6rem; margin-bottom: 1.25rem; }
+    .exp-title {
+      font-size: 0.82rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      font-family: var(--font-mono); color: var(--ink);
+      margin-bottom: 0.75rem;
+    }
+    .exp-desc {
+      font-size: 0.85rem; color: var(--ink-2);
+      line-height: 1.7; font-weight: 300; margin-bottom: 1.25rem;
+    }
+    .exp-pills { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .pill {
+      font-size: 0.68rem; padding: 0.2rem 0.55rem;
+      background: var(--paper-2); border-radius: 2px;
+      color: var(--ink-3); font-family: var(--font-mono);
+    }
+
+    /* ── ARCHITECTURE ── */
+    .arch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .arch-card {
+      background: white; border: 1px solid var(--rule); border-radius: 2px;
+      overflow: hidden; transition: border-color 0.2s, transform 0.2s;
+    }
+    .arch-card:hover { border-color: var(--green); transform: translateY(-2px); }
+    .arch-diagram { background: var(--paper-2); padding: 2rem; border-bottom: 1px solid var(--rule); }
+    .arch-diagram svg { width: 100%; height: auto; }
+    .arch-body { padding: 1.5rem; }
+    .arch-title { font-size: 0.92rem; font-weight: 600; color: var(--ink); margin-bottom: 0.4rem; }
+    .arch-desc { font-size: 0.8rem; color: var(--ink-3); line-height: 1.65; margin-bottom: 1rem; }
+    .arch-pills { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+
+    /* ── WRITING ── */
+    .writing-list { display: flex; flex-direction: column; gap: 0; }
+    .article {
+      display: grid; grid-template-columns: 120px 1fr auto;
+      align-items: center; gap: 2rem;
+      padding: 1.75rem 0; border-bottom: 1px solid var(--rule);
+      text-decoration: none; color: inherit;
+      transition: background 0.15s;
+    }
+    .article:first-child { border-top: 1px solid var(--rule); }
+    .article:hover { background: var(--green-pale); margin: 0 -1rem; padding-left: 1rem; padding-right: 1rem; }
+    .art-date {
+      font-family: var(--font-mono); font-size: 0.65rem;
+      color: var(--ink-3); letter-spacing: 0.06em;
+    }
+    .art-title {
+      font-family: var(--font-serif); font-size: 1rem;
+      font-weight: 400; color: var(--ink); line-height: 1.4;
+    }
+    .art-tag {
+      font-family: var(--font-mono); font-size: 0.62rem;
+      padding: 0.2rem 0.6rem; border-radius: 2px;
+      background: var(--green-pale); color: var(--green);
+      white-space: nowrap;
+    }
+    .art-tag.draft {
+      background: var(--paper-3); color: var(--ink-3);
+    }
+    .writing-cta {
+      margin-top: 2.5rem;
+      display: flex; align-items: center; gap: 1.5rem;
+    }
+    .writing-cta-text {
+      font-size: 0.85rem; color: var(--ink-3); font-weight: 300;
+    }
+
+    /* ── CONTACT ── */
+    .contact-wrap {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 7rem; align-items: start;
+    }
+    .contact-hed {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 400; letter-spacing: -0.03em;
+      line-height: 1.15; color: var(--ink); margin-bottom: 1.5rem;
+    }
+    .contact-hed em { font-style: italic; color: var(--green); }
+    .contact-sub {
+      font-size: 1rem; color: var(--ink-2); line-height: 1.8;
+      font-weight: 300; margin-bottom: 2.5rem;
+    }
+    .contact-links { display: flex; flex-direction: column; gap: 0.75rem; }
+    .clink {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem 1.25rem;
+      background: white; border: 1px solid var(--rule); border-radius: 2px;
+      text-decoration: none; transition: all 0.18s;
+    }
+    .clink:hover { border-color: var(--green); transform: translateX(4px); }
+    .clink-ico {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--green-pale); display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-mono); font-size: 0.7rem; font-weight: 500; color: var(--green);
+      flex-shrink: 0;
+    }
+    .clink-label {
+      font-family: var(--font-mono); font-size: 0.62rem;
+      color: var(--ink-3); letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    .clink-val { font-size: 0.88rem; font-weight: 500; color: var(--ink); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--rule);
+      padding: 1.75rem 6vw;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .foot-l { font-family: var(--font-serif); font-style: italic; font-size: 0.9rem; color: var(--ink-3); }
+    .foot-r { font-family: var(--font-mono); font-size: 0.65rem; color: var(--ink-3); letter-spacing: 0.06em; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes up { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:none; } }
+    .hero-kicker { animation: up 0.55s ease both; }
+    h1 { animation: up 0.55s 0.08s ease both; }
+    .hero-sub { animation: up 0.55s 0.16s ease both; }
+    .hero-actions { animation: up 0.55s 0.24s ease both; }
+    .hero-right { animation: up 0.55s 0.14s ease both; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 860px) {
+      .hero-main { grid-template-columns: 1fr; }
+      .hero-left { border-right: none; border-bottom: 1px solid var(--rule); }
+      .hero-footer { grid-template-columns: 1fr 1fr; }
+      .hf-stat:nth-child(2) { border-right: none; }
+      .hf-stat:nth-child(3) { border-top: 1px solid var(--rule); }
+      .about-wrap { grid-template-columns: 1fr; gap: 3rem; }
+      .expertise-grid { grid-template-columns: 1fr 1fr; }
+      .arch-grid { grid-template-columns: 1fr; }
+      .article { grid-template-columns: 1fr; gap: 0.5rem; }
+      .contact-wrap { grid-template-columns: 1fr; gap: 3rem; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-mark">Vidya Mani</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#expertise">Expertise</a></li>
+    <li><a href="#systems">Systems</a></li>
+    <li><a href="#writing">Writing</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-main">
+    <div class="hero-left">
+      <div class="hero-kicker">AI Systems · Architecture · Research</div>
+      <h1>Building AI<br/>that works<br/><em>in the wild.</em></h1>
+      <p class="hero-sub">
+        I design <strong>production-grade AI systems</strong> — multi-agent pipelines, RAG architectures, and the infrastructure that holds them together when real users show up. Working across Google ADK, Claude ADK, and LangGraph. Writing and building at the frontier of what's possible.
+      </p>
+      <div class="hero-actions">
+        <a href="#systems" class="btn btn-fill">See my work →</a>
+        <a href="#writing" class="btn btn-line">Read my writing</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-areas">
+        <div class="area-row">
+          <span class="area-num">01</span>
+          <span class="area-name">Multi-Agent Systems</span>
+          <div class="area-tags"><span class="chip g">Google ADK</span><span class="chip g">Claude ADK</span><span class="chip g">LangGraph</span></div>
+        </div>
+        <div class="area-row">
+          <span class="area-num">02</span>
+          <span class="area-name">RAG & Knowledge Retrieval</span>
+          <div class="area-tags"><span class="chip g">KG-RAG</span><span class="chip g">Hybrid</span></div>
+        </div>
+        <div class="area-row">
+          <span class="area-num">03</span>
+          <span class="area-name">NLP — Pre-GPT to Present</span>
+          <div class="area-tags"><span class="chip">BERT</span><span class="chip">LLMs</span><span class="chip">Text-to-SQL</span></div>
+        </div>
+        <div class="area-row">
+          <span class="area-num">04</span>
+          <span class="area-name">Computer Vision & 3D ML</span>
+          <div class="area-tags"><span class="chip">Detection</span><span class="chip">Segmentation</span><span class="chip">Point Cloud</span></div>
+        </div>
+        <div class="area-row">
+          <span class="area-num">05</span>
+          <span class="area-name">MLOps & AI Infrastructure</span>
+          <div class="area-tags"><span class="chip">Azure</span><span class="chip">AWS</span><span class="chip">GCP</span></div>
+        </div>
+        <div class="area-row">
+          <span class="area-num">06</span>
+          <span class="area-name">LLM Evaluation & Reliability</span>
+          <div class="area-tags"><span class="chip">Evals</span><span class="chip">HITL</span><span class="chip">Test Suites</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-footer">
+    <div class="hf-stat">
+      <div class="hf-n">6+</div>
+      <div class="hf-l">Years shipping AI in production</div>
+    </div>
+    <div class="hf-stat">
+      <div class="hf-n">3</div>
+      <div class="hf-l">Domains: Healthcare, Finance, Telecom</div>
+    </div>
+    <div class="hf-stat">
+      <div class="hf-n">10+</div>
+      <div class="hf-l">AI systems designed end-to-end</div>
+    </div>
+    <div class="hf-stat">
+      <div class="hf-n">Pre-<br/>GPT</div>
+      <div class="hf-l">Shipping NLP & CV before the boom</div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="sec-head">
+    <span class="sec-tag">01 / About</span>
+    <h2>The long way into AI</h2>
+    <div class="sec-rule"></div>
+  </div>
+  <div class="about-wrap">
+    <div class="about-body">
+      <p>
+        My path into AI started with <strong>classical computer vision</strong> and <strong>NLP</strong> — shipping object detection models, 3D point cloud systems, and BERT-based semantic search in production environments, back when none of that came with a convenient API wrapper.
+      </p>
+      <p>
+        That foundation shapes how I work today. Years spent in the unglamorous parts of ML — data pipelines, model registries, latency budgets, failure modes — means I know what's inside these systems, not just what they can do when everything goes right.
+      </p>
+      <div class="pull-quote">
+        "I care about AI that ships — observable, reproducible, and built to handle real-world messiness."
+      </div>
+      <p>
+        Today I work at the frontier of <strong>multi-agent AI</strong> — designing production systems across Healthcare, Finance, and Telecom using <strong>Google ADK, Claude ADK, and LangGraph</strong>. I've contributed to internal agent frameworks used across large engineering organisations, and I lead teams through the hardest part: turning a compelling demo into something that holds up when real users and real data arrive.
+      </p>
+      <p>
+        My longer game is to write, research, and build in public — sharing the patterns, pitfalls, and principles that only come from doing this work for real.
+      </p>
+    </div>
+    <div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot g"></div>
+          <div>
+            <div class="tl-era">Now</div>
+            <div class="tl-role">AI Systems Architect</div>
+            <div class="tl-desc">Multi-agent systems, GenAI at enterprise scale, internal AI frameworks — Healthcare, Finance, Telecom</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot a"></div>
+          <div>
+            <div class="tl-era">Prior</div>
+            <div class="tl-role">ML & Computer Vision Engineer</div>
+            <div class="tl-desc">CV, 3D point cloud ML, BERT-era NLP, classical ML — Telecom domain at production scale</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot s"></div>
+          <div>
+            <div class="tl-era">Earlier</div>
+            <div class="tl-role">Software Engineer + Research Intern</div>
+            <div class="tl-desc">Enterprise software (Java), and research experience at a national space agency</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot s" style="background:var(--rule)"></div>
+          <div>
+            <div class="tl-era">Foundations</div>
+            <div class="tl-role">Computer Science — Theory + Practice</div>
+            <div class="tl-desc">Formal CS grounding across two institutions, bridging research rigour and applied engineering</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERTISE -->
+<section id="expertise" class="alt">
+  <div class="sec-head">
+    <span class="sec-tag">02 / Expertise</span>
+    <h2>Areas of deep practice</h2>
+    <div class="sec-rule"></div>
+  </div>
+  <div class="expertise-grid">
+
+    <div class="exp-card">
+      <div class="exp-icon">🕸️</div>
+      <div class="exp-title">Multi-Agent Systems</div>
+      <div class="exp-desc">Designing orchestrated agent pipelines across <strong>Google ADK, Claude ADK, and LangGraph</strong> — decomposing complex tasks, routing between specialised sub-agents, maintaining coherence across long-horizon workflows. HITL checkpoints, telemetry, and failure recovery built in by default.</div>
+      <div class="exp-pills">
+        <span class="pill">Google ADK</span><span class="pill">Claude ADK</span><span class="pill">LangGraph</span><span class="pill">MCP</span><span class="pill">HITL</span><span class="pill">Tool Use</span>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-icon">🗄️</div>
+      <div class="exp-title">RAG & Knowledge Retrieval</div>
+      <div class="exp-desc">Beyond naive vector search — hybrid retrieval that routes across Knowledge Graphs and dense embeddings, fusing structured and unstructured evidence for grounded, low-hallucination responses in high-stakes domains.</div>
+      <div class="exp-pills">
+        <span class="pill">Knowledge Graphs</span><span class="pill">Pinecone</span><span class="pill">Weaviate</span><span class="pill">Milvus</span><span class="pill">Qdrant</span><span class="pill">Hybrid Search</span>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-icon">🧪</div>
+      <div class="exp-title">LLM Evaluation & Reliability</div>
+      <div class="exp-desc">Building evaluation frameworks that actually catch problems before they reach users — automated test suites for multi-agent POCs, hallucination benchmarks, and structured scoring for complex, open-ended outputs.</div>
+      <div class="exp-pills">
+        <span class="pill">LLM Evals</span><span class="pill">Multi-Agent Testing</span><span class="pill">Prompt Engineering</span><span class="pill">Benchmarking</span>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-icon">🔤</div>
+      <div class="exp-title">NLP — Pre-GPT to Present</div>
+      <div class="exp-desc">A full NLP arc: semantic search with BERT before it was mainstream, enterprise search systems, text classification, and now LLM-powered pipelines including Text-to-SQL, document understanding, and structured extraction at scale. Both the old way and the new way.</div>
+      <div class="exp-pills">
+        <span class="pill">BERT</span><span class="pill">Transformers</span><span class="pill">Semantic Search</span><span class="pill">Text-to-SQL</span><span class="pill">LLMs</span><span class="pill">Embeddings</span>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-icon">👁️</div>
+      <div class="exp-title">Computer Vision & 3D ML</div>
+      <div class="exp-desc">Pre-LLM depth in visual AI — object detection, segmentation, and 3D point cloud models for real industrial environments. The kind of low-level ML knowledge that makes LLM abstractions legible.</div>
+      <div class="exp-pills">
+        <span class="pill">PyTorch</span><span class="pill">Object Detection</span><span class="pill">Segmentation</span><span class="pill">Point Cloud</span><span class="pill">LiDAR</span>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-icon">⚙️</div>
+      <div class="exp-title">MLOps & AI Infrastructure</div>
+      <div class="exp-desc">End-to-end delivery — from experiment tracking and model registry to CI/CD pipelines and cloud deployment. The plumbing that keeps AI systems running (and observable) after the demo is over.</div>
+      <div class="exp-pills">
+        <span class="pill">Azure</span><span class="pill">AWS</span><span class="pill">GCP</span><span class="pill">MLflow</span><span class="pill">Docker</span><span class="pill">GitHub Actions</span><span class="pill">Azure DevOps</span>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-icon">🧭</div>
+      <div class="exp-title">Technical Leadership</div>
+      <div class="exp-desc">Architecture decisions, team mentorship, client-facing delivery, and the judgement to know when to build vs. buy. Leading AI projects from first whiteboard session to production handoff across Healthcare, Finance, and Telecom.</div>
+      <div class="exp-pills">
+        <span class="pill">System Design</span><span class="pill">Team Mentorship</span><span class="pill">Client Delivery</span><span class="pill">POC → Prod</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SYSTEMS / ARCHITECTURE -->
+<section id="systems">
+  <div class="sec-head">
+    <span class="sec-tag">03 / Systems</span>
+    <h2>How I think in architecture</h2>
+    <div class="sec-rule"></div>
+  </div>
+  <div class="arch-grid">
+
+    <!-- Diagram 1 -->
+    <div class="arch-card">
+      <div class="arch-diagram">
+        <svg viewBox="0 0 420 230" xmlns="http://www.w3.org/2000/svg" font-family="'DM Mono', monospace">
+          <defs>
+            <marker id="a1" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L6,3z" fill="#1c4535"/>
+            </marker>
+            <marker id="a1g" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L6,3z" fill="#7a7972"/>
+            </marker>
+          </defs>
+          <text x="210" y="13" text-anchor="middle" font-size="7.5" fill="#7a7972" letter-spacing="1.5">MULTI-AGENT RAG WITH HITL</text>
+          <!-- User -->
+          <rect x="8" y="92" width="68" height="38" rx="2" fill="#e4ede9" stroke="#1c4535" stroke-width="1.5"/>
+          <text x="42" y="109" text-anchor="middle" font-size="8.5" fill="#1c4535" font-weight="500">User</text>
+          <text x="42" y="121" text-anchor="middle" font-size="7" fill="#2a6349">Query</text>
+          <line x1="76" y1="111" x2="104" y2="111" stroke="#1c4535" stroke-width="1.2" marker-end="url(#a1)"/>
+          <!-- Orchestrator -->
+          <rect x="106" y="80" width="92" height="62" rx="2" fill="#1c4535"/>
+          <text x="152" y="105" text-anchor="middle" font-size="8.5" fill="white" font-weight="500">Orchestrator</text>
+          <text x="152" y="118" text-anchor="middle" font-size="7" fill="#a8c8b8">LangGraph</text>
+          <text x="152" y="130" text-anchor="middle" font-size="7" fill="#a8c8b8">Agent Graph</text>
+          <!-- HITL -->
+          <rect x="106" y="22" width="92" height="28" rx="10" fill="white" stroke="#1c4535" stroke-width="1" stroke-dasharray="3,2"/>
+          <text x="152" y="35" text-anchor="middle" font-size="7.5" fill="#1c4535">✋ HITL Checkpoint</text>
+          <text x="152" y="46" text-anchor="middle" font-size="6.5" fill="#7a7972">human approval gate</text>
+          <line x1="152" y1="50" x2="152" y2="80" stroke="#1c4535" stroke-width="1" stroke-dasharray="3,2"/>
+          <!-- sub agents -->
+          <line x1="152" y1="142" x2="152" y2="162" stroke="#7a7972" stroke-width="1" marker-end="url(#a1g)"/>
+          <rect x="44" y="164" width="72" height="30" rx="2" fill="#f2f0ea" stroke="#7a7972" stroke-width="1"/>
+          <text x="80" y="178" text-anchor="middle" font-size="7.5" fill="#3d3d3a" font-weight="500">Retrieval</text>
+          <text x="80" y="189" text-anchor="middle" font-size="6.5" fill="#7a7972">Agent</text>
+          <rect x="124" y="164" width="72" height="30" rx="2" fill="#f2f0ea" stroke="#7a7972" stroke-width="1"/>
+          <text x="160" y="178" text-anchor="middle" font-size="7.5" fill="#3d3d3a" font-weight="500">Reasoning</text>
+          <text x="160" y="189" text-anchor="middle" font-size="6.5" fill="#7a7972">Agent</text>
+          <rect x="204" y="164" width="72" height="30" rx="2" fill="#f2f0ea" stroke="#7a7972" stroke-width="1"/>
+          <text x="240" y="178" text-anchor="middle" font-size="7.5" fill="#3d3d3a" font-weight="500">Synthesis</text>
+          <text x="240" y="189" text-anchor="middle" font-size="6.5" fill="#7a7972">Agent</text>
+          <line x1="125" y1="142" x2="80" y2="164" stroke="#7a7972" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#a1g)"/>
+          <line x1="180" y1="142" x2="240" y2="164" stroke="#7a7972" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#a1g)"/>
+          <!-- Vector DB -->
+          <rect x="314" y="80" width="96" height="36" rx="2" fill="#fdf3e3" stroke="#92600a" stroke-width="1.5"/>
+          <text x="362" y="97" text-anchor="middle" font-size="8" fill="#92600a" font-weight="500">Vector Store</text>
+          <text x="362" y="109" text-anchor="middle" font-size="6.5" fill="#92600a">Pinecone · Weaviate</text>
+          <!-- LLM -->
+          <rect x="314" y="140" width="96" height="36" rx="2" fill="#e4ede9" stroke="#1c4535" stroke-width="1.5"/>
+          <text x="362" y="157" text-anchor="middle" font-size="8" fill="#1c4535" font-weight="500">LLM</text>
+          <text x="362" y="169" text-anchor="middle" font-size="6.5" fill="#2a6349">Azure OpenAI · Claude</text>
+          <line x1="198" y1="96" x2="314" y2="96" stroke="#92600a" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#a1)"/>
+          <line x1="198" y1="122" x2="314" y2="150" stroke="#1c4535" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#a1)"/>
+          <!-- output -->
+          <rect x="314" y="196" width="96" height="26" rx="2" fill="#1c4535"/>
+          <text x="362" y="212" text-anchor="middle" font-size="7.5" fill="white" font-weight="500">Response</text>
+          <line x1="362" y1="176" x2="362" y2="196" stroke="#1c4535" stroke-width="1.2" marker-end="url(#a1)"/>
+        </svg>
+      </div>
+      <div class="arch-body">
+        <div class="arch-title">Multi-Agent RAG with HITL</div>
+        <div class="arch-desc">Orchestrated agent graph with human-in-the-loop approval gates, specialist sub-agents for retrieval, reasoning, and synthesis. The production pattern I use for high-stakes domains.</div>
+        <div class="arch-pills">
+          <span class="pill">LangGraph</span><span class="pill">HITL</span><span class="pill">Azure OpenAI</span><span class="pill">Pinecone</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Diagram 2 -->
+    <div class="arch-card">
+      <div class="arch-diagram">
+        <svg viewBox="0 0 420 230" xmlns="http://www.w3.org/2000/svg" font-family="'DM Mono', monospace">
+          <defs>
+            <marker id="a2" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L6,3z" fill="#1c4535"/>
+            </marker>
+            <marker id="a2a" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L6,3z" fill="#92600a"/>
+            </marker>
+          </defs>
+          <text x="210" y="13" text-anchor="middle" font-size="7.5" fill="#7a7972" letter-spacing="1.5">KNOWLEDGE GRAPH RAG PIPELINE</text>
+          <rect x="8" y="96" width="68" height="36" rx="2" fill="#e4ede9" stroke="#1c4535" stroke-width="1.5"/>
+          <text x="42" y="112" text-anchor="middle" font-size="8" fill="#1c4535" font-weight="500">Query</text>
+          <text x="42" y="124" text-anchor="middle" font-size="6.5" fill="#2a6349">+ Context</text>
+          <line x1="76" y1="114" x2="104" y2="114" stroke="#1c4535" stroke-width="1.2" marker-end="url(#a2)"/>
+          <!-- Router -->
+          <rect x="106" y="84" width="82" height="60" rx="2" fill="#1c4535"/>
+          <text x="147" y="109" text-anchor="middle" font-size="8.5" fill="white" font-weight="500">Semantic</text>
+          <text x="147" y="121" text-anchor="middle" font-size="8.5" fill="white" font-weight="500">Router</text>
+          <text x="147" y="135" text-anchor="middle" font-size="6.5" fill="#a8c8b8">classifies intent</text>
+          <!-- KG path -->
+          <line x1="188" y1="98" x2="218" y2="68" stroke="#92600a" stroke-width="1.2" marker-end="url(#a2a)"/>
+          <rect x="220" y="44" width="96" height="42" rx="2" fill="#fdf3e3" stroke="#92600a" stroke-width="1.5"/>
+          <text x="268" y="63" text-anchor="middle" font-size="8" fill="#92600a" font-weight="500">Knowledge Graph</text>
+          <text x="268" y="77" text-anchor="middle" font-size="6.5" fill="#92600a">Entities + Relations</text>
+          <!-- Vector path -->
+          <line x1="188" y1="130" x2="218" y2="156" stroke="#7a7972" stroke-width="1.2" marker-end="url(#a2)"/>
+          <rect x="220" y="142" width="96" height="42" rx="2" fill="#f2f0ea" stroke="#7a7972" stroke-width="1.5"/>
+          <text x="268" y="161" text-anchor="middle" font-size="8" fill="#3d3d3a" font-weight="500">Vector Store</text>
+          <text x="268" y="175" text-anchor="middle" font-size="6.5" fill="#7a7972">Dense embeddings</text>
+          <!-- Fusion -->
+          <line x1="316" y1="65" x2="340" y2="105" stroke="#92600a" stroke-width="1.2" marker-end="url(#a2)"/>
+          <line x1="316" y1="163" x2="340" y2="127" stroke="#7a7972" stroke-width="1.2" marker-end="url(#a2)"/>
+          <rect x="342" y="92" width="72" height="52" rx="2" fill="#1c4535"/>
+          <text x="378" y="114" text-anchor="middle" font-size="8" fill="white" font-weight="500">Fusion +</text>
+          <text x="378" y="126" text-anchor="middle" font-size="8" fill="white" font-weight="500">Generate</text>
+          <text x="378" y="137" text-anchor="middle" font-size="6.5" fill="#a8c8b8">LLM synthesis</text>
+          <!-- Output -->
+          <line x1="378" y1="144" x2="378" y2="188" stroke="#1c4535" stroke-width="1.2" marker-end="url(#a2)"/>
+          <rect x="330" y="190" width="96" height="30" rx="2" fill="#e4ede9" stroke="#1c4535" stroke-width="1.5"/>
+          <text x="378" y="208" text-anchor="middle" font-size="7.5" fill="#1c4535" font-weight="500">Grounded Response</text>
+          <!-- labels -->
+          <text x="205" y="54" text-anchor="middle" font-size="6.5" fill="#92600a">structured</text>
+          <text x="205" y="176" text-anchor="middle" font-size="6.5" fill="#7a7972">semantic</text>
+        </svg>
+      </div>
+      <div class="arch-body">
+        <div class="arch-title">Knowledge Graph RAG</div>
+        <div class="arch-desc">Hybrid retrieval routing across structured Knowledge Graphs and dense vector stores. Fuses symbolic and semantic evidence for grounded responses. Especially effective in clinical and compliance-heavy domains.</div>
+        <div class="arch-pills">
+          <span class="pill">Knowledge Graph</span><span class="pill">Weaviate</span><span class="pill">Hybrid Retrieval</span><span class="pill">Claude API</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Diagram 3 -->
+    <div class="arch-card">
+      <div class="arch-diagram">
+        <svg viewBox="0 0 420 190" xmlns="http://www.w3.org/2000/svg" font-family="'DM Mono', monospace">
+          <defs>
+            <marker id="a3" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L6,3z" fill="#1c4535"/>
+            </marker>
+          </defs>
+          <text x="210" y="13" text-anchor="middle" font-size="7.5" fill="#7a7972" letter-spacing="1.5">GENAI MLOPS PIPELINE</text>
+          <!-- stages -->
+          <rect x="8" y="72" width="62" height="48" rx="2" fill="#f2f0ea" stroke="#7a7972" stroke-width="1.2"/>
+          <text x="39" y="93" text-anchor="middle" font-size="8" fill="#3d3d3a" font-weight="500">Code</text>
+          <text x="39" y="105" text-anchor="middle" font-size="6.5" fill="#7a7972">Commit</text>
+          <text x="39" y="115" text-anchor="middle" font-size="6.5" fill="#7a7972">GitHub</text>
+          <line x1="70" y1="96" x2="84" y2="96" stroke="#1c4535" stroke-width="1.2" marker-end="url(#a3)"/>
+
+          <rect x="86" y="72" width="62" height="48" rx="2" fill="#f2f0ea" stroke="#7a7972" stroke-width="1.2"/>
+          <text x="117" y="93" text-anchor="middle" font-size="8" fill="#3d3d3a" font-weight="500">Build</text>
+          <text x="117" y="105" text-anchor="middle" font-size="6.5" fill="#7a7972">Docker</text>
+          <text x="117" y="115" text-anchor="middle" font-size="6.5" fill="#7a7972">CI/CD</text>
+          <line x1="148" y1="96" x2="162" y2="96" stroke="#1c4535" stroke-width="1.2" marker-end="url(#a3)"/>
+
+          <rect x="164" y="72" width="62" height="48" rx="2" fill="#f2f0ea" stroke="#7a7972" stroke-width="1.2"/>
+          <text x="195" y="93" text-anchor="middle" font-size="8" fill="#3d3d3a" font-weight="500">Evaluate</text>
+          <text x="195" y="105" text-anchor="middle" font-size="6.5" fill="#7a7972">LLM Evals</text>
+          <text x="195" y="115" text-anchor="middle" font-size="6.5" fill="#7a7972">Test Suite</text>
+          <line x1="226" y1="96" x2="240" y2="96" stroke="#1c4535" stroke-width="1.2" marker-end="url(#a3)"/>
+
+          <rect x="242" y="72" width="62" height="48" rx="2" fill="#e4ede9" stroke="#1c4535" stroke-width="1.5"/>
+          <text x="273" y="93" text-anchor="middle" font-size="8" fill="#1c4535" font-weight="500">Register</text>
+          <text x="273" y="105" text-anchor="middle" font-size="6.5" fill="#2a6349">MLflow</text>
+          <text x="273" y="115" text-anchor="middle" font-size="6.5" fill="#2a6349">Registry</text>
+          <line x1="304" y1="96" x2="318" y2="96" stroke="#1c4535" stroke-width="1.2" marker-end="url(#a3)"/>
+
+          <rect x="320" y="72" width="92" height="48" rx="2" fill="#1c4535"/>
+          <text x="366" y="93" text-anchor="middle" font-size="8" fill="white" font-weight="500">Deploy</text>
+          <text x="366" y="105" text-anchor="middle" font-size="6.5" fill="#a8c8b8">Azure / AWS</text>
+          <text x="366" y="115" text-anchor="middle" font-size="6.5" fill="#a8c8b8">+ Monitor</text>
+
+          <!-- feedback -->
+          <path d="M366 120 Q366 162 210 162 Q55 162 39 120" fill="none" stroke="#92600a" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#a3)"/>
+          <text x="210" y="156" text-anchor="middle" font-size="6.5" fill="#92600a">continuous monitoring → retrain trigger</text>
+        </svg>
+      </div>
+      <div class="arch-body">
+        <div class="arch-title">GenAI MLOps Pipeline</div>
+        <div class="arch-desc">End-to-end CI/CD for LLM-based systems — evaluation before every deployment, model versioning, and continuous monitoring with automated retrain triggers in production.</div>
+        <div class="arch-pills">
+          <span class="pill">MLflow</span><span class="pill">Docker</span><span class="pill">Azure DevOps</span><span class="pill">GitHub Actions</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Diagram 4 -->
+    <div class="arch-card">
+      <div class="arch-diagram">
+        <svg viewBox="0 0 420 190" xmlns="http://www.w3.org/2000/svg" font-family="'DM Mono', monospace">
+          <defs>
+            <marker id="a4" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L6,3z" fill="#1c4535"/>
+            </marker>
+          </defs>
+          <text x="210" y="13" text-anchor="middle" font-size="7.5" fill="#7a7972" letter-spacing="1.5">AGENTIC FRAMEWORK ARCHITECTURE</text>
+          <!-- Core -->
+          <rect x="148" y="64" width="124" height="62" rx="3" fill="#1c4535"/>
+          <text x="210" y="88" text-anchor="middle" font-size="9" fill="white" font-weight="500">Agent Runtime Core</text>
+          <text x="210" y="101" text-anchor="middle" font-size="7" fill="#a8c8b8">LangGraph-based orchestration</text>
+          <text x="210" y="114" text-anchor="middle" font-size="7" fill="#a8c8b8">State management + routing</text>
+          <!-- left -->
+          <rect x="18" y="28" width="88" height="32" rx="2" fill="#fdf3e3" stroke="#92600a" stroke-width="1.2"/>
+          <text x="62" y="44" text-anchor="middle" font-size="7.5" fill="#92600a" font-weight="500">Reusable Plugins</text>
+          <text x="62" y="55" text-anchor="middle" font-size="6.5" fill="#92600a">cross-domain tools</text>
+          <line x1="106" y1="44" x2="148" y2="80" stroke="#92600a" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#a4)"/>
+
+          <rect x="18" y="88" width="88" height="32" rx="2" fill="#e4ede9" stroke="#1c4535" stroke-width="1.2"/>
+          <text x="62" y="104" text-anchor="middle" font-size="7.5" fill="#1c4535" font-weight="500">HITL Interface</text>
+          <text x="62" y="115" text-anchor="middle" font-size="6.5" fill="#2a6349">human-in-the-loop</text>
+          <line x1="106" y1="104" x2="148" y2="104" stroke="#1c4535" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#a4)"/>
+
+          <rect x="18" y="148" width="88" height="32" rx="2" fill="#f2f0ea" stroke="#7a7972" stroke-width="1.2"/>
+          <text x="62" y="164" text-anchor="middle" font-size="7.5" fill="#3d3d3a" font-weight="500">Telemetry</text>
+          <text x="62" y="175" text-anchor="middle" font-size="6.5" fill="#7a7972">observability built-in</text>
+          <line x1="106" y1="164" x2="148" y2="122" stroke="#7a7972" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#a4)"/>
+
+          <!-- right -->
+          <rect x="314" y="28" width="88" height="32" rx="2" fill="#f2f0ea" stroke="#7a7972" stroke-width="1.2"/>
+          <text x="358" y="44" text-anchor="middle" font-size="7.5" fill="#3d3d3a" font-weight="500">Chat Interface</text>
+          <text x="358" y="55" text-anchor="middle" font-size="6.5" fill="#7a7972">conversational UI</text>
+          <line x1="272" y1="80" x2="314" y2="44" stroke="#7a7972" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#a4)"/>
+
+          <rect x="314" y="88" width="88" height="32" rx="2" fill="#e4ede9" stroke="#1c4535" stroke-width="1.2"/>
+          <text x="358" y="104" text-anchor="middle" font-size="7.5" fill="#1c4535" font-weight="500">Platform Layer</text>
+          <text x="358" y="115" text-anchor="middle" font-size="6.5" fill="#2a6349">enterprise AI infra</text>
+          <line x1="272" y1="104" x2="314" y2="104" stroke="#1c4535" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#a4)"/>
+
+          <rect x="314" y="148" width="88" height="32" rx="2" fill="#fdf3e3" stroke="#92600a" stroke-width="1.2"/>
+          <text x="358" y="164" text-anchor="middle" font-size="7.5" fill="#92600a" font-weight="500">Domain Agents</text>
+          <text x="358" y="175" text-anchor="middle" font-size="6.5" fill="#92600a">vertical-specific</text>
+          <line x1="272" y1="122" x2="314" y2="162" stroke="#92600a" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#a4)"/>
+        </svg>
+      </div>
+      <div class="arch-body">
+        <div class="arch-title">Agentic Framework Design</div>
+        <div class="arch-desc">Internal framework architecture: LangGraph runtime with pluggable HITL interfaces, cross-domain reusable tools, built-in telemetry, and clean separation between the orchestration core and domain-specific agents.</div>
+        <div class="arch-pills">
+          <span class="pill">LangGraph</span><span class="pill">HITL</span><span class="pill">Telemetry</span><span class="pill">Plugin Architecture</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- WRITING -->
+<section id="writing" class="alt">
+  <div class="sec-head">
+    <span class="sec-tag">04 / Writing</span>
+    <h2>Thinking out loud</h2>
+    <div class="sec-rule"></div>
+  </div>
+  <div class="writing-list">
+
+    <a href="https://medium.com/@vidyamani/architecting-large-scale-search-solutions-on-gcp-a-technical-deep-dive-bb9caeaf8912" target="_blank" class="article">
+      <div class="art-date">Aug 2024</div>
+      <div class="art-title">Architecting Large-Scale Search Solutions on GCP: A Technical Deep Dive</div>
+      <span class="art-tag">Search Systems</span>
+    </a>
+
+    <a href="https://medium.com/@vidyamani/architecting-large-scale-search-solutions-on-gcp-part-1-overview-e0d26066f4c8" target="_blank" class="article">
+      <div class="art-date">Aug 2024</div>
+      <div class="art-title">Architecting Large-Scale Search on GCP — Part 1: Overview</div>
+      <span class="art-tag">GCP · Architecture</span>
+    </a>
+
+    <a href="https://medium.com/@vidyamani/architecting-large-scale-search-solutions-on-gcp-part-2-data-ingestion-and-storage-4793b2e4eaf2" target="_blank" class="article">
+      <div class="art-date">Aug 2024</div>
+      <div class="art-title">Architecting Large-Scale Search on GCP — Part 2: Data Ingestion & Storage</div>
+      <span class="art-tag">GCP · Data</span>
+    </a>
+
+    <a href="https://medium.com/@vidyamani/accelerating-python-for-data-science-with-numba-ecd0466cd515" target="_blank" class="article">
+      <div class="art-date">Mar 2024</div>
+      <div class="art-title">Turbocharging Python for Data Science with Numba</div>
+      <span class="art-tag">Performance · Python</span>
+    </a>
+
+    <div class="article" style="opacity:0.55; cursor:default;">
+      <div class="art-date">In progress</div>
+      <div class="art-title">Production Multi-Agent Systems with LangGraph: Patterns That Actually Work</div>
+      <span class="art-tag draft">Coming soon</span>
+    </div>
+
+    <div class="article" style="opacity:0.55; cursor:default; border-bottom:none;">
+      <div class="art-date">In progress</div>
+      <div class="art-title">Knowledge Graph RAG vs. Vector RAG: Lessons from High-Stakes Domains</div>
+      <span class="art-tag draft">Coming soon</span>
+    </div>
+
+  </div>
+  <div class="writing-cta">
+    <a href="https://medium.com/@vidyamani" target="_blank" class="btn btn-line">All writing on Medium →</a>
+    <span class="writing-cta-text">More technical deep-dives on the way.</span>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-wrap">
+    <div>
+      <h2 class="contact-hed">Let's think about <em>hard problems</em> together.</h2>
+      <p class="contact-sub">
+        I'm open to conversations about ambitious AI systems, technical architecture, and writing collaborations. If you're working on something interesting — reach out.
+      </p>
+      <a href="mailto:vidyasrimani@gmail.com" class="btn btn-fill">Send a message →</a>
+    </div>
+    <div class="contact-links">
+      <a href="https://www.linkedin.com/in/vidya-mani/" target="_blank" class="clink">
+        <div class="clink-ico">in</div>
+        <div>
+          <div class="clink-label">LinkedIn</div>
+          <div class="clink-val">vidya-mani</div>
+        </div>
+      </a>
+      <a href="https://github.com/vidyasrimani" target="_blank" class="clink">
+        <div class="clink-ico">gh</div>
+        <div>
+          <div class="clink-label">GitHub</div>
+          <div class="clink-val">vidyasrimani</div>
+        </div>
+      </a>
+      <a href="https://medium.com/@vidyamani" target="_blank" class="clink">
+        <div class="clink-ico">M</div>
+        <div>
+          <div class="clink-label">Medium</div>
+          <div class="clink-val">@vidyamani</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="foot-l">Vidya Mani</span>
+  <span class="foot-r">vidyasrimani.com</span>
+</footer>
+
+</body>
+</html>
